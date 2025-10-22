@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: egalindo <egalindo@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/20 19:01:39 by egalindo          #+#    #+#             */
-/*   Updated: 2025/10/20 19:01:39 by egalindo         ###   ########.fr       */
+/*   Created: 2025/10/22 22:30:37 by egalindo          #+#    #+#             */
+/*   Updated: 2025/10/22 22:30:37 by egalindo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,108 +15,101 @@
 #include <stdio.h>
 #include <limits.h>
 
-//This test need to be compiled with libftprintf.a or the library created by the Makefile
-//Use cc -Wall -Wextra -Werror to follow the norm and avoid errors
-
 int main(void)
 {
-    // --- Test variables ---
-    char            c = 'A';
-    char            *normal_str = "Hello, world!";
-    char            *null_str = NULL;
-    int             num = 42;
-    void            *valid_ptr = &num;
-    void            *null_ptr = NULL;
-    int             pos_d = 12345;
-    int             neg_d = -6789;
-    int             max_d = INT_MAX;
-    int             min_d = INT_MIN;
-    unsigned int    max_u = UINT_MAX;
-    int             test_num = 1; // Counter for tests
+	int res1, res2;
 
-    // --- Tests for %c ---
-    printf("\n--- Tests for: %%c (Character) ---\n");
-    printf("%d. System: [%c]\n", test_num, c);
-    ft_printf("%d. Mine:   [%c]\n", test_num++, c);
-    printf("%d. System: [%c]\n", test_num, '0');
-    ft_printf("%d. Mine:   [%c]\n", test_num++, '0');
+	printf("--- STARTING EDGE CASE TESTS ---\n\n");
 
-    // --- Tests for %s ---
-    printf("\n--- Tests for: %%s (String) ---\n");
-    printf("%d. System: [%s]\n", test_num, normal_str);
-    ft_printf("%d. Mine:   [%s]\n", test_num++, normal_str);
-    printf("%d. System: [%s]\n", test_num, "");
-    ft_printf("%d. Mine:   [%s]\n", test_num++, "");
-    printf("%d. System: [%s]\n", test_num, null_str);
-    ft_printf("%d. Mine:   [%s]\n", test_num++, null_str);
+	printf("--- Test 1: Percent and space ---\n");
+	res1 = printf("Hola % t");
+	printf("\n");
+	res2 = ft_printf("Hola % t");
+	printf("\n");
+	printf("Ret: %d | %d\n", res1, res2);
+	printf("--------------------------------\n\n");
 
-    // --- Tests for %p ---
-    printf("\n--- Tests for: %%p (Pointer) ---\n");
-    printf("%d. System: [%p]\n", test_num, valid_ptr);
-    ft_printf("%d. Mine:   [%p]\n", test_num++, valid_ptr);
-    printf("%d. System: [%p]\n", test_num, null_ptr);
-    ft_printf("%d. Mine:   [%p]\n", test_num++, null_ptr);
-    printf("%d. System: [%p]\n", test_num, (void *)ULONG_MAX);
-    ft_printf("%d. Mine:   [%p]\n", test_num++, (void *)ULONG_MAX);
+	printf("--- Test 2: Invalid specifier %%z ---\n");
+	res1 = printf("Hola %) world");
+	printf("\n");
+	res2 = ft_printf("Hola %) world");
+	printf("\n");
+	printf("Ret: %d | %d\n", res1, res2);
+	printf("--------------------------------\n\n");
 
-    // --- Tests for %d and %i ---
-    printf("\n--- Tests for: %%d and %%i (Integer) ---\n");
-    printf("%d. System: [%d]\n", test_num, pos_d);
-    ft_printf("%d. Mine:   [%d]\n", test_num++, pos_d);
-    printf("%d. System: [%i]\n", test_num, neg_d);
-    ft_printf("%d. Mine:   [%i]\n", test_num++, neg_d);
-    printf("%d. System: [%d]\n", test_num, 0);
-    ft_printf("%d. Mine:   [%d]\n", test_num++, 0);
-    printf("%d. System: [%d]\n", test_num, max_d);
-    ft_printf("%d. Mine:   [%d]\n", test_num++, max_d);
-    printf("%d. System: [%d]\n", test_num, min_d);
-    ft_printf("%d. Mine:   [%d]\n", test_num++, min_d);
+	printf("--- Test 3: String ends with %% ---\n");
+	res1 = printf("Hello %");
+	printf("\n");
+	res2 = ft_printf("Hello %");
+	printf("\n");
+	printf("Ret: %d | %d\n", res1, res2);
+	printf("--------------------------------\n\n");
 
-    // --- Tests for %u ---
-    printf("\n--- Tests for: %%u (Unsigned integer) ---\n");
-    printf("%d. System: [%u]\n", test_num, 12345U);
-    ft_printf("%d. Mine:   [%u]\n", test_num++, 12345U);
-    printf("%d. System: [%u]\n", test_num, 0U);
-    ft_printf("%d. Mine:   [%u]\n", test_num++, 0U);
-    printf("%d. System: [%u]\n", test_num, max_u);
-    ft_printf("%d. Mine:   [%u]\n", test_num++, max_u);
-    printf("%d. System: [%u]\n", test_num, (unsigned int)-1);
-    ft_printf("%d. Mine:   [%u]\n", test_num++, (unsigned int)-1);
+	printf("--- Test 4: Just %% ---\n");
+	res1 = printf("%");
+	printf("\n");
+	res2 = ft_printf("%");
+	printf("\n");
+	printf("Ret: %d | %d\n", res1, res2);
+	printf("--------------------------------\n\n");
 
-    // --- Tests for %x ---
-    printf("\n--- Tests for: %%x (Lowercase hexadecimal) ---\n");
-    printf("%d. System: [%x]\n", test_num, 255);
-    ft_printf("%d. Mine:   [%x]\n", test_num++, 255);
-    printf("%d. System: [%x]\n", test_num, -1);
-    ft_printf("%d. Mine:   [%x]\n", test_num++, -1);
-    printf("%d. System: [%x]\n", test_num, min_d);
-    ft_printf("%d. Mine:   [%x]\n", test_num++, min_d);
+	printf("--- Test 5: NULL format string ---\n");
+	printf("(Skipping real printf(NULL) - causes SEGFAULT)\n");
+	res1 = -1;
+	res2 = ft_printf(NULL);
+	printf("\n");
+	printf("Ret: %d (placeholder) | %d\n", res1, res2);
+	printf("--------------------------------\n\n");
 
-    // --- Tests for %X ---
-    printf("\n--- Tests for: %%X (Uppercase hexadecimal) ---\n");
-    printf("%d. System: [%X]\n", test_num, 255);
-    ft_printf("%d. Mine:   [%X]\n", test_num++, 255);
-    printf("%d. System: [%X]\n", test_num, -1);
-    ft_printf("%d. Mine:   [%X]\n", test_num++, -1);
-    printf("%d. System: [%X]\n", test_num, min_d);
-    ft_printf("%d. Mine:   [%X]\n", test_num++, min_d);
+	printf("--- Test 6: Complex percent combinations ---\n");
+	res1 = printf("A %%d B %%%d C %d%% D", 123, 456);
+	printf("\n");
+	res2 = ft_printf("A %%d B %%%d C %d%% D", 123, 456);
+	printf("\n");
+	printf("Ret: %d | %d\n", res1, res2);
+	printf("--------------------------------\n\n");
 
-    // --- Tests for %% and wrong format specifiers ---
-    printf("\n--- Tests for: %% (Percentage symbol and wrong format specifiers) ---\n");
-    printf("%d. System: [%%%%%%]\n", test_num);
-    ft_printf("%d. Mine:   [%%%%%%]\n", test_num++);
-    printf("%d. System: [%% %% %%]\n", test_num);
-    ft_printf("%d. Mine:   [%% %% %%]\n", test_num++);
-    printf("%d. System: [%%s: %s, %%d: %d, %%]\n", test_num, normal_str, neg_d);
-    ft_printf("%d. Mine:   [%%s: %s, %%d: %d, %%]\n", test_num++, normal_str, neg_d);
-    printf("%d. System: [%%Start and end%%]\n", test_num);
-    ft_printf("%d. Mine:   [%%Start and end%%]\n", test_num++);
-    printf("%d. System: [Invalid specifier %%y]\n", test_num);
-    ft_printf("%d. Mine:   [Invalid specifier %%y]\n", test_num++);
-    printf("%d. System: [Another one %% followed by space]\n", test_num);
-    ft_printf("%d. Mine:   [Another one %% followed by space]\n", test_num++);
-    printf("%d. System: [Single percent at the end%%]\n", test_num);
-    ft_printf("%d. Mine:   [Single percent at the end%%]\n", test_num++);
+	printf("--- Test 7: Double percent ---\n");
+	res1 = printf("Testing 100%% complete %%");
+	printf("\n");
+	res2 = ft_printf("Testing 100%% complete %%");
+	printf("\n");
+	printf("Ret: %d | %d\n", res1, res2);
+	printf("--------------------------------\n\n");
 
-    return (0);
+	printf("--- Test 8: Extra arguments ---\n");
+	res1 = printf("Hello", 123, "world", (void *)0);
+	printf("\n");
+	res2 = ft_printf("Hello", 123, "world", (void *)0);
+	printf("\n");
+	printf("Ret: %d | %d\n", res1, res2);
+	printf("--------------------------------\n\n");
+
+	printf("--- Test 9: NULL string (%%s) ---\n");
+	res1 = printf("String: %s (end)", (char *)NULL);
+	printf("\n");
+	res2 = ft_printf("String: %s (end)", (char *)NULL);
+	printf("\n");
+	printf("Ret: %d | %d\n", res1, res2);
+	printf("--------------------------------\n\n");
+
+	printf("--- Test 10: NULL pointer (%%p) ---\n");
+	res1 = printf("Pointer: %p (end)", (void *)NULL);
+	printf("\n");
+	res2 = ft_printf("Pointer: %p (end)", (void *)NULL);
+	printf("\n");
+	printf("Ret: %d | %d\n", res1, res2);
+	printf("--------------------------------\n\n");
+
+	printf("--- Test 11: Printing zero (d, u, x, X) ---\n");
+	res1 = printf("Zeroes: %d %u %x %X", 0, 0, 0, 0);
+	printf("\n");
+	res2 = ft_printf("Zeroes: %d %u %x %X", 0, 0, 0, 0);
+	printf("\n");
+	printf("Ret: %d | %d\n", res1, res2);
+	printf("--------------------------------\n\n");
+
+	printf("--- END OF EDGE CASE TESTS ---\n");
+
+	return (0);
 }
